@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://bhavya-4708.github.io/quick-pdf/</loc>
   </url>
+
   <url>
     <loc>https://bhavya-4708.github.io/quick-pdf/about.html</loc>
   </url>
+
   <url>
     <loc>https://bhavya-4708.github.io/quick-pdf/contact.html</loc>
   </url>
+
   <url>
     <loc>https://bhavya-4708.github.io/quick-pdf/privacy.html</loc>
   </url>
+
   <url>
     <loc>https://bhavya-4708.github.io/quick-pdf/terms.html</loc>
   </url>
+
+  <url>
+    <loc>https://bhavya-4708.github.io/quick-pdf/text-to-pdf.html</loc>
+  </url>
+
+  <url>
+    <loc>https://bhavya-4708.github.io/quick-pdf/image-to-pdf.html</loc>
+  </url>
+
+  <url>
+    <loc>https://bhavya-4708.github.io/quick-pdf/merge-pdf.html</loc>
+  </url>
+
 </urlset>
