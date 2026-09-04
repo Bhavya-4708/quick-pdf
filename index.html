@@ -1,1271 +1,1057 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>QuickPDF - Free Online PDF Builder | Create PDF Online</title>
-<meta name="google-site-verification" content="tRTBUvi5qUTuOcS6nC2iUUEDRJK9DffKS6Vx5nSMfLA">
-<meta name="description" content="Create PDF online for free. Convert text and images to PDF, merge PDF files, customize page size and download your PDF instantly. No signup required.">
-<meta name="keywords" content="PDF builder, create PDF online, free PDF maker, image to PDF, text to PDF, merge PDF, online PDF tool, PDF creator">
-<meta name="author" content="QuickPDF">
-
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#2563eb">
-
-<!-- Change this to your real domain after buying it -->
-<link rel="canonical" href="https://bhavya-4708.github.io/quick-pdf/">
-
-<meta property="og:title" content="QuickPDF - Free Online PDF Builder">
-<meta property="og:description" content="Create, customize and download PDFs online for free.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://bhavya-4708.github.io/quick-pdf/">
-
-<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
-<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:Inter,Arial,Helvetica,sans-serif;
-    background:#f5f7fb;
-    color:#172033;
-    line-height:1.6;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-button,
-input,
-textarea,
-select{
-    font:inherit;
-}
-
-.container{
-    width:min(1120px,92%);
-    margin:auto;
-}
-
-/* NAVBAR */
-
-.navbar{
-    background:#fff;
-    border-bottom:1px solid #e5e7eb;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.nav-inner{
-    height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    font-size:25px;
-    font-weight:800;
-    color:#2563eb;
-}
-
-.logo span{
-    color:#111827;
-}
-
-.nav-links{
-    display:flex;
-    gap:26px;
-    align-items:center;
-}
-
-.nav-links a{
-    color:#4b5563;
-    font-weight:600;
-    font-size:14px;
-}
-
-.nav-links a:hover{
-    color:#2563eb;
-}
-
-.mobile-btn{
-    display:none;
-    border:0;
-    background:none;
-    font-size:26px;
-    cursor:pointer;
-}
-
-/* HERO */
-
-.hero{
-    padding:75px 0 60px;
-    text-align:center;
-    background:
-        radial-gradient(circle at top left,#dbeafe 0,transparent 35%),
-        radial-gradient(circle at top right,#e0e7ff 0,transparent 35%),
-        #f8fafc;
-}
-
-.badge{
-    display:inline-block;
-    background:#dbeafe;
-    color:#1d4ed8;
-    padding:7px 14px;
-    border-radius:30px;
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:18px;
-}
-
-.hero h1{
-    font-size:clamp(35px,6vw,62px);
-    line-height:1.08;
-    max-width:850px;
-    margin:auto;
-    letter-spacing:-2px;
-}
-
-.hero h1 span{
-    color:#2563eb;
-}
-
-.hero p{
-    max-width:680px;
-    margin:20px auto 28px;
-    color:#64748b;
-    font-size:18px;
-}
-
-.hero-buttons{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-}
-
-.btn{
-    border:0;
-    border-radius:10px;
-    padding:13px 21px;
-    cursor:pointer;
-    font-weight:700;
-    transition:.2s;
-}
-
-.btn-primary{
-    background:#2563eb;
-    color:#fff;
-}
-
-.btn-primary:hover{
-    background:#1d4ed8;
-    transform:translateY(-1px);
-}
-
-.btn-secondary{
-    background:#fff;
-    color:#1f2937;
-    border:1px solid #d1d5db;
-}
-
-.btn-secondary:hover{
-    border-color:#2563eb;
-    color:#2563eb;
-}
-
-/* TOOLS */
-
-.section{
-    padding:70px 0;
-}
-
-.section-title{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.section-title h2{
-    font-size:34px;
-    margin-bottom:8px;
-}
-
-.section-title p{
-    color:#64748b;
-}
-
-.tools-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-.tool-card{
-    background:#fff;
-    padding:28px;
-    border-radius:18px;
-    border:1px solid #e5e7eb;
-    box-shadow:0 8px 30px rgba(15,23,42,.05);
-}
-
-.tool-icon{
-    width:50px;
-    height:50px;
-    border-radius:13px;
-    background:#eff6ff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:25px;
-    margin-bottom:18px;
-}
-
-.tool-card h3{
-    margin-bottom:8px;
-}
-
-.tool-card p{
-    color:#64748b;
-    font-size:14px;
-}
-
-/* BUILDER */
-
-.builder{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:20px;
-    padding:28px;
-    box-shadow:0 10px 35px rgba(15,23,42,.06);
-}
-
-.tabs{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-bottom:25px;
-}
-
-.tab{
-    padding:10px 16px;
-    border:1px solid #d1d5db;
-    border-radius:9px;
-    background:#fff;
-    cursor:pointer;
-    font-weight:600;
-}
-
-.tab.active{
-    background:#2563eb;
-    color:#fff;
-    border-color:#2563eb;
-}
-
-.panel{
-    display:none;
-}
-
-.panel.active{
-    display:block;
-}
-
-label{
-    display:block;
-    font-weight:700;
-    margin-bottom:7px;
-}
-
-input,
-textarea,
-select{
-    width:100%;
-    border:1px solid #d1d5db;
-    border-radius:9px;
-    padding:12px 13px;
-    outline:none;
-    background:#fff;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.1);
-}
-
-textarea{
-    min-height:260px;
-    resize:vertical;
-}
-
-.form-group{
-    margin-bottom:18px;
-}
-
-.row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-}
-
-.options{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-    margin-bottom:20px;
-}
-
-/* DROP ZONE */
-
-.dropzone{
-    border:2px dashed #93c5fd;
-    background:#eff6ff;
-    border-radius:15px;
-    padding:45px 20px;
-    text-align:center;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.dropzone:hover,
-.dropzone.dragover{
-    background:#dbeafe;
-    border-color:#2563eb;
-}
-
-.dropzone strong{
-    display:block;
-    font-size:18px;
-    margin-bottom:5px;
-}
-
-.dropzone span{
-    color:#64748b;
-    font-size:14px;
-}
-
-.file-list{
-    margin-top:18px;
-}
-
-.file-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    background:#f8fafc;
-    padding:10px 12px;
-    border-radius:9px;
-    margin-bottom:8px;
-    font-size:14px;
-}
-
-.remove-file{
-    color:#dc2626;
-    cursor:pointer;
-    border:0;
-    background:none;
-    font-weight:bold;
-}
-
-/* FEATURES */
-
-.feature-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.feature{
-    padding:25px;
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:15px;
-}
-
-.feature h3{
-    margin-bottom:6px;
-}
-
-.feature p{
-    color:#64748b;
-    font-size:14px;
-}
-
-/* FAQ */
-
-.faq{
-    max-width:800px;
-    margin:auto;
-}
-
-.faq-item{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:12px;
-    margin-bottom:10px;
-    overflow:hidden;
-}
-
-.faq-question{
-    width:100%;
-    padding:17px;
-    border:0;
-    background:#fff;
-    text-align:left;
-    font-weight:700;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-}
-
-.faq-answer{
-    display:none;
-    padding:0 17px 17px;
-    color:#64748b;
-}
-
-.faq-item.open .faq-answer{
-    display:block;
-}
-
-/* AD SPACE */
-
-.ad-box{
-    min-height:100px;
-    border:1px dashed #cbd5e1;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#94a3b8;
-    margin:25px 0;
-    font-size:13px;
-}
-
-/* FOOTER */
-
-footer{
-    background:#111827;
-    color:#cbd5e1;
-    padding:45px 0 25px;
-}
-
-.footer-grid{
-    display:grid;
-    grid-template-columns:2fr 1fr 1fr;
-    gap:40px;
-}
-
-footer h3{
-    color:#fff;
-    margin-bottom:10px;
-}
-
-footer p{
-    font-size:14px;
-    color:#94a3b8;
-}
-
-footer a{
-    display:block;
-    margin:7px 0;
-    font-size:14px;
-    color:#cbd5e1;
-}
-
-.footer-bottom{
-    border-top:1px solid #374151;
-    margin-top:30px;
-    padding-top:18px;
-    text-align:center;
-    font-size:13px;
-    color:#94a3b8;
-}
-
-/* TOAST */
-
-.toast{
-    position:fixed;
-    bottom:25px;
-    right:25px;
-    background:#111827;
-    color:#fff;
-    padding:13px 18px;
-    border-radius:9px;
-    display:none;
-    z-index:2000;
-}
-
-/* MOBILE */
-
-@media(max-width:800px){
-
-    .nav-links{
-        display:none;
-        position:absolute;
-        top:70px;
-        left:0;
-        width:100%;
-        background:#fff;
-        padding:20px;
-        flex-direction:column;
-        border-bottom:1px solid #e5e7eb;
-    }
-
-    .nav-links.show{
-        display:flex;
-    }
-
-    .mobile-btn{
-        display:block;
-    }
-
-    .tools-grid,
-    .feature-grid{
-        grid-template-columns:1fr;
-    }
-
-    .options,
-    .row{
-        grid-template-columns:1fr;
-    }
-
-    .hero{
-        padding-top:55px;
-    }
-
-    .builder{
-        padding:18px;
-    }
-
-    .footer-grid{
-        grid-template-columns:1fr;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QuickPDF - Free Online PDF Builder | Create PDF Online</title>
+
+    <meta name="description"
+        content="Create PDF online for free. Convert text and images to PDF, merge PDF files, customize page size and download your PDF instantly. No signup required.">
+
+    <meta name="keywords"
+        content="PDF builder, create PDF online, free PDF maker, image to PDF, text to PDF, merge PDF, online PDF tool, PDF creator">
+
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="https://bhavya-4708.github.io/quick-pdf/">
+
+    <meta property="og:title" content="QuickPDF - Free Online PDF Builder">
+    <meta property="og:description"
+        content="Create PDFs online for free. Convert text and images to PDF and merge PDF files easily.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bhavya-4708.github.io/quick-pdf/">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #172033;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e8ebf0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #4f46e5;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            font-weight: 600;
+            color: #465066;
+        }
+
+        nav a:hover {
+            color: #4f46e5;
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 85px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #eef2ff, #ffffff);
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 65px);
+            line-height: 1.1;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: #4f46e5;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: auto;
+            color: #5d6678;
+            font-size: 18px;
+        }
+
+        .builder {
+            margin-top: -35px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .builder-box {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 15px 45px rgba(20, 30, 60, .12);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            border: 1px solid #dfe3ea;
+            background: #fff;
+            padding: 12px 18px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .tab.active,
+        .tab:hover {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .panel {
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        textarea,
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dce1e8;
+            border-radius: 8px;
+            font-size: 15px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            min-height: 220px;
+            resize: vertical;
+        }
+
+        label {
+            font-weight: 700;
+        }
+
+        button,
+        .primary-btn {
+            border: none;
+            background: #4f46e5;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        button:hover,
+        .primary-btn:hover {
+            background: #3730a3;
+        }
+
+        .secondary-btn {
+            background: #eef2ff;
+            color: #3730a3;
+        }
+
+        .upload-area {
+            border: 2px dashed #cdd3df;
+            padding: 35px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .upload-area input {
+            border: none;
+        }
+
+        .pdf-list {
+            margin: 15px 0;
+        }
+
+        .pdf-item {
+            background: #f5f6fa;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 8px;
+        }
+
+        .section {
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #697386;
+        }
+
+        .tools-grid,
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .tool-card,
+        .feature-card {
+            background: white;
+            border: 1px solid #e8ebf0;
+            padding: 28px;
+            border-radius: 14px;
+            transition: .2s;
+        }
+
+        .tool-card:hover,
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(20, 30, 60, .08);
+        }
+
+        .tool-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .tool-card h3,
+        .feature-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .tool-card p,
+        .feature-card p {
+            color: #687184;
+        }
+
+        .faq {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid #e8ebf0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+
+        .faq-item h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .faq-item p {
+            color: #687184;
+        }
+
+        .cta {
+            text-align: center;
+            background: #eef2ff;
+            padding: 70px 20px;
+        }
+
+        .cta h2 {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #606a7b;
+            margin-bottom: 25px;
+        }
+
+        footer {
+            background: #111827;
+            color: #d7dce5;
+            padding: 55px 20px 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        footer h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        footer a {
+            display: block;
+            margin: 8px 0;
+            color: #c6ccd7;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid #2a3342;
+            margin-top: 35px;
+            padding-top: 20px;
+            text-align: center;
+            color: #9ba3b1;
+        }
+
+        @media (max-width: 800px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                border-top: 1px solid #eee;
+            }
+
+            nav.show {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .tools-grid,
+            .features-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 65px 15px;
+            }
+
+            .builder-box {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+    <header>
+        <div class="container navbar">
 
-<nav class="navbar">
-<div class="container nav-inner">
+            <a href="./" class="logo">
+                Quick<span>PDF</span>
+            </a>
 
-<a href="#" class="logo">Quick<span>PDF</span></a>
+            <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-<button class="mobile-btn" onclick="toggleMenu()">☰</button>
+            <nav id="navMenu">
+                <a href="./">Home</a>
+                <a href="about.html">About</a>
+                <a href="#tools">PDF Tools</a>
+                <a href="#faq">FAQ</a>
+                <a href="contact.html">Contact</a>
+            </nav>
 
-<div class="nav-links" id="navLinks">
-<a href="#tools">Tools</a>
-<a href="#builder">PDF Builder</a>
-<a href="#features">Features</a>
-<a href="#faq">FAQ</a>
-</div>
+        </div>
+    </header>
 
-</div>
-</nav>
 
+    <main>
 
-<!-- HERO -->
+        <section class="hero">
 
-<header class="hero">
+            <div class="container">
 
-<div class="container">
+                <h1>
+                    Create Your <span>PDF</span><br>
+                    Online in Seconds
+                </h1>
 
-<div class="badge">FREE • FAST • NO SIGNUP</div>
+                <p>
+                    QuickPDF is a free online PDF builder that lets you create
+                    PDFs from text and images and combine multiple PDF files
+                    directly in your browser.
+                </p>
 
-<h1>Create Your <span>PDF</span> Online in Seconds</h1>
+            </div>
 
-<p>
-Create professional PDFs from text and images directly in your browser.
-Fast, simple and free.
-</p>
+        </section>
 
-<div class="hero-buttons">
-<a href="#builder" class="btn btn-primary">Create PDF Now</a>
-<a href="#tools" class="btn btn-secondary">Explore Tools</a>
-</div>
 
-</div>
+        <section class="builder" id="builder">
 
-</header>
+            <div class="container">
 
+                <div class="builder-box">
 
-<!-- AD PLACEHOLDER -->
+                    <div class="tabs">
 
-<div class="container">
-<div class="ad-box">
-Advertisement
-<!--
-PASTE YOUR APPROVED ADSENSE CODE HERE AFTER ADSENSE APPROVES YOUR SITE.
--->
-</div>
-</div>
+                        <button class="tab active" onclick="showPanel('textPanel', this)">
+                            Text to PDF
+                        </button>
 
+                        <button class="tab" onclick="showPanel('imagePanel', this)">
+                            Images to PDF
+                        </button>
 
-<!-- TOOLS -->
+                        <button class="tab" onclick="showPanel('mergePanel', this)">
+                            Merge PDF
+                        </button>
 
-<section class="section" id="tools">
+                    </div>
 
-<div class="container">
 
-<div class="section-title">
-<h2>Free PDF Tools</h2>
-<p>Everything you need to create useful PDF files online.</p>
-</div>
+                    <!-- TEXT PANEL -->
 
-<div class="tools-grid">
+                    <div class="panel active" id="textPanel">
 
-<div class="tool-card">
-<div class="tool-icon">📝</div>
-<h3>Text to PDF</h3>
-<p>Write or paste text and instantly turn it into a downloadable PDF.</p>
-</div>
+                        <h2>Create PDF from Text</h2>
 
-<div class="tool-card">
-<div class="tool-icon">🖼️</div>
-<h3>Images to PDF</h3>
-<p>Convert JPG, PNG and other browser-supported images into PDF pages.</p>
-</div>
+                        <p>
+                            Enter your text below and download it as a PDF.
+                        </p>
 
-<div class="tool-card">
-<div class="tool-icon">📑</div>
-<h3>Merge PDF</h3>
-<p>Combine multiple PDF files into one PDF directly in your browser.</p>
-</div>
+                        <label for="textInput">Your Text</label>
 
-<div class="tool-card">
-<div class="tool-icon">📱</div>
-<h3>Mobile Friendly</h3>
-<p>Use the PDF builder comfortably on phones, tablets and computers.</p>
-</div>
+                        <textarea id="textInput"
+                            placeholder="Type or paste your text here..."></textarea>
 
-<div class="tool-card">
-<div class="tool-icon">⚡</div>
-<h3>Fast Processing</h3>
-<p>Basic PDF creation happens directly in your browser.</p>
-</div>
+                        <label for="pageSize">Page Size</label>
 
-<div class="tool-card">
-<div class="tool-icon">🔒</div>
-<h3>No Account Required</h3>
-<p>Create simple PDFs without creating an account.</p>
-</div>
+                        <select id="pageSize">
+                            <option value="a4">A4</option>
+                            <option value="letter">Letter</option>
+                        </select>
 
-</div>
+                        <button onclick="createTextPDF()">
+                            Download Text PDF
+                        </button>
 
-</div>
+                    </div>
 
-</section>
 
+                    <!-- IMAGE PANEL -->
 
-<!-- BUILDER -->
+                    <div class="panel" id="imagePanel">
 
-<section class="section" id="builder">
+                        <h2>Convert Images to PDF</h2>
 
-<div class="container">
+                        <p>
+                            Select JPG, JPEG, PNG or WEBP images and create
+                            a PDF directly in your browser.
+                        </p>
 
-<div class="section-title">
-<h2>PDF Builder</h2>
-<p>Choose what you want to create.</p>
-</div>
+                        <div class="upload-area">
 
-<div class="builder">
+                            <input type="file"
+                                id="imageInput"
+                                accept="image/jpeg,image/png,image/webp"
+                                multiple>
 
-<div class="tabs">
+                        </div>
 
-<button class="tab active" onclick="showTab('text',this)">
-📝 Text to PDF
-</button>
+                        <button onclick="createImagePDF()">
+                            Download Image PDF
+                        </button>
 
-<button class="tab" onclick="showTab('image',this)">
-🖼️ Images to PDF
-</button>
+                    </div>
 
-<button class="tab" onclick="showTab('merge',this)">
-📑 Merge PDF
-</button>
 
-</div>
+                    <!-- MERGE PANEL -->
 
+                    <div class="panel" id="mergePanel">
 
-<!-- TEXT PANEL -->
+                        <h2>Merge PDF Files</h2>
 
-<div class="panel active" id="text">
+                        <p>
+                            Select multiple PDF files and combine them into
+                            one PDF.
+                        </p>
 
-<div class="form-group">
-<label for="pdfTitle">Document Title</label>
-<input id="pdfTitle" type="text" placeholder="My Document">
-</div>
+                        <div class="upload-area">
 
-<div class="form-group">
-<label for="pdfText">Your Text</label>
-<textarea id="pdfText" placeholder="Write or paste your content here..."></textarea>
-</div>
+                            <input type="file"
+                                id="pdfInput"
+                                accept="application/pdf"
+                                multiple>
 
-<div class="options">
+                        </div>
 
-<div>
-<label>Page Size</label>
-<select id="textSize">
-<option value="a4">A4</option>
-<option value="letter">Letter</option>
-</select>
-</div>
+                        <button onclick="mergePDFs()">
+                            Merge & Download PDF
+                        </button>
 
-<div>
-<label>Font Size</label>
-<select id="fontSize">
-<option value="12">12</option>
-<option value="14" selected>14</option>
-<option value="16">16</option>
-<option value="18">18</option>
-<option value="20">20</option>
-</select>
-</div>
+                    </div>
 
-<div>
-<label>File Name</label>
-<input id="textFile" value="quickpdf-document">
-</div>
+                </div>
 
-</div>
+            </div>
 
-<button class="btn btn-primary" onclick="createTextPDF()">
-Download PDF
-</button>
+        </section>
 
-</div>
 
+        <!-- SEO TOOL SECTION -->
 
-<!-- IMAGE PANEL -->
+        <section class="section" id="tools">
 
-<div class="panel" id="image">
+            <div class="container">
 
-<div class="dropzone" id="imageDrop">
-<strong>📁 Drop images here</strong>
-<span>or click to choose JPG / PNG images</span>
-<input type="file" id="imageInput" accept="image/*" multiple hidden>
-</div>
+                <div class="section-title">
 
-<div class="file-list" id="imageList"></div>
+                    <h2>Free PDF Tools</h2>
 
-<div class="options">
+                    <p>
+                        Simple online tools for creating and managing PDF files.
+                    </p>
 
-<div>
-<label>Page Size</label>
-<select id="imageSize">
-<option value="a4">A4</option>
-<option value="letter">Letter</option>
-</select>
-</div>
+                </div>
 
-<div>
-<label>Orientation</label>
-<select id="imageOrientation">
-<option value="portrait">Portrait</option>
-<option value="landscape">Landscape</option>
-</select>
-</div>
 
-<div>
-<label>File Name</label>
-<input id="imageFile" value="images-to-pdf">
-</div>
+                <div class="tools-grid">
 
-</div>
+                    <a href="text-to-pdf.html" class="tool-card">
 
-<button class="btn btn-primary" onclick="createImagePDF()">
-Convert Images to PDF
-</button>
+                        <div class="tool-icon">📝</div>
 
-</div>
+                        <h3>Text to PDF</h3>
 
+                        <p>
+                            Convert plain text into a downloadable PDF document
+                            quickly and easily.
+                        </p>
 
-<!-- MERGE PANEL -->
+                    </a>
 
-<div class="panel" id="merge">
 
-<div class="dropzone" id="pdfDrop">
+                    <a href="image-to-pdf.html" class="tool-card">
 
-<strong>📑 Drop PDF files here</strong>
-<span>or click to choose multiple PDF files</span>
+                        <div class="tool-icon">🖼️</div>
 
-<input type="file" id="pdfInput" accept="application/pdf" multiple hidden>
+                        <h3>Image to PDF</h3>
 
-</div>
+                        <p>
+                            Convert JPG, JPEG, PNG and WEBP images into a PDF
+                            file directly in your browser.
+                        </p>
 
-<div class="file-list" id="pdfList"></div>
+                    </a>
 
-<div class="form-group" style="margin-top:18px;">
-<label>Output File Name</label>
-<input id="mergeFile" value="merged-pdf">
-</div>
 
-<button class="btn btn-primary" onclick="mergePDFs()">
-Merge PDF Files
-</button>
+                    <a href="merge-pdf.html" class="tool-card">
 
-</div>
+                        <div class="tool-icon">📑</div>
 
-</div>
+                        <h3>Merge PDF</h3>
 
-</div>
+                        <p>
+                            Combine multiple PDF files into one organized PDF
+                            document.
+                        </p>
 
-</section>
+                    </a>
 
+                </div>
 
-<!-- AD -->
+            </div>
 
-<div class="container">
-<div class="ad-box">
-Advertisement
-</div>
-</div>
+        </section>
 
 
-<!-- FEATURES -->
+        <!-- FEATURES -->
 
-<section class="section" id="features">
+        <section class="section">
 
-<div class="container">
+            <div class="container">
 
-<div class="section-title">
-<h2>Why Use QuickPDF?</h2>
-<p>Simple tools designed for everyday PDF needs.</p>
-</div>
+                <div class="section-title">
 
-<div class="feature-grid">
+                    <h2>Why Use QuickPDF?</h2>
 
-<div class="feature">
-<h3>⚡ Simple</h3>
-<p>No complicated software. Select your tool and create your PDF.</p>
-</div>
+                    <p>
+                        A simple and convenient way to create PDFs online.
+                    </p>
 
-<div class="feature">
-<h3>📱 Anywhere</h3>
-<p>Works across modern desktop and mobile browsers.</p>
-</div>
+                </div>
 
-<div class="feature">
-<h3>🔐 Browser Based</h3>
-<p>Basic creation and processing happens directly in your browser.</p>
-</div>
 
-<div class="feature">
-<h3>🎓 Students</h3>
-<p>Create assignments, notes, project documents and study PDFs.</p>
-</div>
+                <div class="features-grid">
 
-<div class="feature">
-<h3>💼 Professionals</h3>
-<p>Create simple documents and image-based PDF files quickly.</p>
-</div>
+                    <div class="feature-card">
 
-<div class="feature">
-<h3>🆓 Free</h3>
-<p>Start creating PDFs without signup or complicated installation.</p>
-</div>
+                        <h3>Free to Use</h3>
 
-</div>
+                        <p>
+                            Create PDFs online without creating an account.
+                        </p>
 
-</div>
+                    </div>
 
-</section>
 
+                    <div class="feature-card">
 
-<!-- FAQ -->
+                        <h3>Browser Based</h3>
 
-<section class="section" id="faq">
+                        <p>
+                            Your PDF creation tasks are processed directly
+                            in your browser.
+                        </p>
 
-<div class="container">
+                    </div>
 
-<div class="section-title">
-<h2>Frequently Asked Questions</h2>
-<p>Common questions about our PDF builder.</p>
-</div>
 
-<div class="faq">
+                    <div class="feature-card">
 
-<div class="faq-item">
-<button class="faq-question">
-Is QuickPDF free?
-<span>+</span>
-</button>
-<div class="faq-answer">
-Yes. The basic PDF creation tools on this website are free to use.
-</div>
-</div>
+                        <h3>Simple Interface</h3>
 
-<div class="faq-item">
-<button class="faq-question">
-Do I need to create an account?
-<span>+</span>
-</button>
-<div class="faq-answer">
-No account is required for the basic PDF tools.
-</div>
-</div>
+                        <p>
+                            Easy-to-use PDF tools designed for students,
+                            professionals and everyday users.
+                        </p>
 
-<div class="faq-item">
-<button class="faq-question">
-Can I convert images to PDF?
-<span>+</span>
-</button>
-<div class="faq-answer">
-Yes. You can select multiple images and create a PDF containing them.
-</div>
-</div>
+                    </div>
 
-<div class="faq-item">
-<button class="faq-question">
-Can I merge PDF files?
-<span>+</span>
-</button>
-<div class="faq-answer">
-Yes. Select multiple PDF files and use the Merge PDF tool.
-</div>
-</div>
 
-<div class="faq-item">
-<button class="faq-question">
-Does it work on mobile?
-<span>+</span>
-</button>
-<div class="faq-answer">
-Yes. The website is responsive and designed for modern mobile browsers.
-</div>
-</div>
+                    <div class="feature-card">
 
-<div class="faq-item">
-<button class="faq-question">
-Are my files uploaded to a server?
-<span>+</span>
-</button>
-<div class="faq-answer">
-The basic text and image PDF tools process files in the browser. This website does not need a backend server for those tools.
-</div>
-</div>
+                        <h3>Multiple Tools</h3>
 
-</div>
+                        <p>
+                            Convert text and images and merge PDF documents
+                            from one place.
+                        </p>
 
-</div>
+                    </div>
 
-</section>
 
+                    <div class="feature-card">
 
-<!-- FOOTER -->
+                        <h3>No Signup Required</h3>
 
-<footer>
+                        <p>
+                            Start creating your PDF without an account.
+                        </p>
 
-<div class="container">
+                    </div>
 
-<div class="footer-grid">
 
-<div>
-<h3>QuickPDF</h3>
-<p>
-Free online tools for creating and managing everyday PDF documents.
-</p>
-</div>
+                    <div class="feature-card">
 
-<div>
-<h3>Tools</h3>
-<a href="#builder">Text to PDF</a>
-<a href="#builder">Images to PDF</a>
-<a href="#builder">Merge PDF</a>
-</div>
+                        <h3>Easy Downloads</h3>
 
-<div>
-<h3>Information</h3>
-<a href="#faq">FAQ</a>
-<a href="#">Privacy Policy</a>
-<a href="#">Terms of Use</a>
-</div>
+                        <p>
+                            Download your generated PDF files with a single
+                            click.
+                        </p>
 
-</div>
+                    </div>
 
-<div class="footer-bottom">
-© 2026 QuickPDF. All rights reserved.
-</div>
+                </div>
 
-</div>
+            </div>
 
-</footer>
+        </section>
 
 
-<div class="toast" id="toast"></div>
+        <!-- FAQ -->
 
+        <section class="section" id="faq">
 
-<script>
+            <div class="container">
 
-const { jsPDF } = window.jspdf;
+                <div class="section-title">
 
-let imageFiles = [];
-let pdfFiles = [];
+                    <h2>Frequently Asked Questions</h2>
 
+                    <p>
+                        Common questions about QuickPDF.
+                    </p>
 
-/* NAV */
+                </div>
 
-function toggleMenu(){
-    document.getElementById("navLinks").classList.toggle("show");
-}
 
+                <div class="faq">
 
-/* TABS */
+                    <div class="faq-item">
 
-function showTab(id,button){
+                        <h3>Is QuickPDF free?</h3>
 
-    document.querySelectorAll(".panel").forEach(p=>{
-        p.classList.remove("active");
-    });
+                        <p>
+                            Yes. QuickPDF provides free browser-based PDF
+                            creation tools.
+                        </p>
 
-    document.querySelectorAll(".tab").forEach(t=>{
-        t.classList.remove("active");
-    });
+                    </div>
 
-    document.getElementById(id).classList.add("active");
-    button.classList.add("active");
 
-}
+                    <div class="faq-item">
 
+                        <h3>Can I convert text to PDF?</h3>
 
-/* TOAST */
+                        <p>
+                            Yes. Use the Text to PDF tool to turn your text
+                            into a downloadable PDF.
+                        </p>
 
-function toast(message){
+                    </div>
 
-    const box=document.getElementById("toast");
 
-    box.textContent=message;
-    box.style.display="block";
+                    <div class="faq-item">
 
-    setTimeout(()=>{
-        box.style.display="none";
-    },3000);
-}
+                        <h3>Can I convert images to PDF?</h3>
 
+                        <p>
+                            Yes. QuickPDF supports common image formats such
+                            as JPG, JPEG, PNG and WEBP.
+                        </p>
 
-/* TEXT PDF */
+                    </div>
 
-function createTextPDF(){
 
-    const title=document.getElementById("pdfTitle").value.trim() || "My Document";
-    const text=document.getElementById("pdfText").value.trim();
-    const size=document.getElementById("textSize").value;
-    const font=parseInt(document.getElementById("fontSize").value);
-    let filename=document.getElementById("textFile").value.trim() || "quickpdf-document";
+                    <div class="faq-item">
 
-    if(!text){
-        toast("Please enter some text first.");
-        return;
-    }
+                        <h3>Can I merge PDF files?</h3>
 
-    if(!filename.toLowerCase().endsWith(".pdf")){
-        filename += ".pdf";
-    }
+                        <p>
+                            Yes. Select multiple PDF files and use the
+                            Merge PDF tool to combine them.
+                        </p>
 
-    const doc=new jsPDF({
-        orientation:"portrait",
-        unit:"mm",
-        format:size
-    });
+                    </div>
 
-    const pageWidth=doc.internal.pageSize.getWidth();
-    const pageHeight=doc.internal.pageSize.getHeight();
 
-    const margin=18;
-    const usableWidth=pageWidth-(margin*2);
+                    <div class="faq-item">
 
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(font+4);
-    doc.text(title,margin,20);
+                        <h3>Do I need to create an account?</h3>
 
-    doc.setFont("helvetica","normal");
-    doc.setFontSize(font);
+                        <p>
+                            No signup is required to use the main PDF tools.
+                        </p>
 
-    const lines=doc.splitTextToSize(text,usableWidth);
+                    </div>
 
-    let y=32;
-    const lineHeight=font*0.45;
 
-    lines.forEach(line=>{
+                    <div class="faq-item">
 
-        if(y > pageHeight-margin){
+                        <h3>Are my files uploaded to a server?</h3>
 
-            doc.addPage();
-            y=margin;
+                        <p>
+                            The PDF processing functions on this page are
+                            designed to run directly in your browser.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CTA -->
+
+        <section class="cta">
+
+            <div class="container">
+
+                <h2>Create Your PDF Today</h2>
+
+                <p>
+                    Convert text, images and PDF files with QuickPDF.
+                </p>
+
+                <a href="#builder" class="primary-btn">
+                    Start Creating PDF
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div>
+
+                    <h3>QuickPDF</h3>
+
+                    <p>
+                        Free online PDF tools for creating, converting and
+                        managing PDF documents.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h3>Tools</h3>
+
+                    <a href="text-to-pdf.html">
+                        Text to PDF
+                    </a>
+
+                    <a href="image-to-pdf.html">
+                        Images to PDF
+                    </a>
+
+                    <a href="merge-pdf.html">
+                        Merge PDF
+                    </a>
+
+                </div>
+
+
+                <div>
+
+                    <h3>Information</h3>
+
+                    <a href="#faq">
+                        FAQ
+                    </a>
+
+                    <a href="privacy.html">
+                        Privacy Policy
+                    </a>
+
+                    <a href="terms.html">
+                        Terms of Use
+                    </a>
+
+                    <a href="about.html">
+                        About
+                    </a>
+
+                    <a href="contact.html">
+                        Contact
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="copyright">
+
+                © 2026 QuickPDF. All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function toggleMenu() {
+
+            document.getElementById("navMenu")
+                .classList.toggle("show");
 
         }
 
-        doc.text(line,margin,y);
 
-        y += lineHeight;
+        function showPanel(panelId, button) {
 
-    });
+            document.querySelectorAll(".panel")
+                .forEach(panel => panel.classList.remove("active"));
 
-    doc.save(filename);
+            document.querySelectorAll(".tab")
+                .forEach(tab => tab.classList.remove("active"));
 
-    toast("PDF created successfully!");
-}
+            document.getElementById(panelId)
+                .classList.add("active");
 
+            button.classList.add("active");
 
-/* IMAGE INPUT */
-
-const imageInput=document.getElementById("imageInput");
-const imageDrop=document.getElementById("imageDrop");
-
-imageDrop.addEventListener("click",()=>{
-    imageInput.click();
-});
-
-imageInput.addEventListener("change",e=>{
-    addImages([...e.target.files]);
-});
-
-imageDrop.addEventListener("dragover",e=>{
-    e.preventDefault();
-    imageDrop.classList.add("dragover");
-});
-
-imageDrop.addEventListener("dragleave",()=>{
-    imageDrop.classList.remove("dragover");
-});
-
-imageDrop.addEventListener("drop",e=>{
-
-    e.preventDefault();
-
-    imageDrop.classList.remove("dragover");
-
-    addImages([...e.dataTransfer.files]);
-
-});
-
-
-function addImages(files){
-
-    files.forEach(file=>{
-
-        if(file.type.startsWith("image/")){
-            imageFiles.push(file);
         }
 
-    });
 
-    renderImages();
+        async function createTextPDF() {
 
-}
+            const text = document.getElementById("textInput").value.trim();
 
+            if (!text) {
 
-function renderImages(){
+                alert("Please enter some text first.");
 
-    const list=document.getElementById("imageList");
+                return;
 
-    list.innerHTML="";
+            }
 
-    imageFiles.forEach((file,index)=>{
+            const { jsPDF } = window.jspdf;
 
-        const item=document.createElement("div");
+            const size = document.getElementById("pageSize").value;
 
-        item.className="file-item";
+            const doc = new jsPDF({
+                format: size
+            });
 
-        item.innerHTML=`
-            <span>🖼️ ${escapeHTML(file.name)}</span>
-            <button class="remove-file" onclick="removeImage(${index})">Remove</button>
-        `;
+            const lines = doc.splitTextToSize(text, 180);
 
-        list.appendChild(item);
+            let y = 20;
 
-    });
+            lines.forEach(line => {
 
-}
+                if (y > 280) {
 
+                    doc.addPage();
 
-function removeImage(index){
+                    y = 20;
 
-    imageFiles.splice(index,1);
-
-    renderImages();
-
-}
-
-
-/* IMAGE PDF */
-
-function createImagePDF(){
-
-    if(imageFiles.length===0){
-        toast("Please select at least one image.");
-        return;
-    }
-
-    const size=document.getElementById("imageSize").value;
-    const orientation=document.getElementById("imageOrientation").value;
-
-    let filename=document.getElementById("imageFile").value.trim() || "images-to-pdf";
-
-    if(!filename.toLowerCase().endsWith(".pdf")){
-        filename+=".pdf";
-    }
-
-    const doc=new jsPDF({
-        orientation:orientation,
-        unit:"mm",
-        format:size
-    });
-
-    let completed=0;
-
-    imageFiles.forEach((file,index)=>{
-
-        const reader=new FileReader();
-
-        reader.onload=function(e){
-
-            const img=new Image();
-
-            img.onload=function(){
-
-                if(index>0){
-                    doc.addPage(size,orientation);
                 }
 
-                const pageWidth=doc.internal.pageSize.getWidth();
-                const pageHeight=doc.internal.pageSize.getHeight();
+                doc.text(line, 15, y);
 
-                const margin=10;
+                y += 8;
 
-                let ratio=Math.min(
-                    (pageWidth-margin*2)/img.width,
-                    (pageHeight-margin*2)/img.height
-                );
+            });
 
-                let width=img.width*ratio;
-                let height=img.height*ratio;
+            doc.save("quickpdf-text.pdf");
 
-                const x=(pageWidth-width)/2;
-                const y=(pageHeight-height)/2;
+        }
 
-                const format=file.type==="image/png" ? "PNG" : "JPEG";
+
+        async function createImagePDF() {
+
+            const input = document.getElementById("imageInput");
+
+            if (!input.files.length) {
+
+                alert("Please select at least one image.");
+
+                return;
+
+            }
+
+            const { jsPDF } = window.jspdf;
+
+            const doc = new jsPDF("p", "mm", "a4");
+
+            for (let i = 0; i < input.files.length; i++) {
+
+                if (i > 0) {
+                    doc.addPage();
+                }
+
+                const file = input.files[i];
+
+                const dataUrl = await fileToDataURL(file);
+
+                const img = new Image();
+
+                await new Promise(resolve => {
+
+                    img.onload = resolve;
+
+                    img.src = dataUrl;
+
+                });
+
+                const pageWidth = 210;
+                const pageHeight = 297;
+
+                const margin = 10;
+
+                let width = pageWidth - margin * 2;
+
+                let height = img.height * width / img.width;
+
+                if (height > pageHeight - margin * 2) {
+
+                    height = pageHeight - margin * 2;
+
+                    width = img.width * height / img.height;
+
+                }
+
+                const x = (pageWidth - width) / 2;
+
+                const y = (pageHeight - height) / 2;
+
+                let format = "JPEG";
+
+                if (file.type === "image/png") {
+                    format = "PNG";
+                }
 
                 doc.addImage(
-                    img,
+                    dataUrl,
                     format,
                     x,
                     y,
@@ -1273,219 +1059,94 @@ function createImagePDF(){
                     height
                 );
 
-                completed++;
+            }
 
-                if(completed===imageFiles.length){
+            doc.save("quickpdf-images.pdf");
 
-                    doc.save(filename);
-
-                    toast("Image PDF created successfully!");
-
-                }
-
-            };
-
-            img.src=e.target.result;
-
-        };
-
-        reader.readAsDataURL(file);
-
-    });
-
-}
-
-
-/* PDF INPUT */
-
-const pdfInput=document.getElementById("pdfInput");
-const pdfDrop=document.getElementById("pdfDrop");
-
-pdfDrop.addEventListener("click",()=>{
-    pdfInput.click();
-});
-
-pdfInput.addEventListener("change",e=>{
-    addPDFs([...e.target.files]);
-});
-
-pdfDrop.addEventListener("dragover",e=>{
-    e.preventDefault();
-    pdfDrop.classList.add("dragover");
-});
-
-pdfDrop.addEventListener("dragleave",()=>{
-    pdfDrop.classList.remove("dragover");
-});
-
-pdfDrop.addEventListener("drop",e=>{
-
-    e.preventDefault();
-
-    pdfDrop.classList.remove("dragover");
-
-    addPDFs([...e.dataTransfer.files]);
-
-});
-
-
-function addPDFs(files){
-
-    files.forEach(file=>{
-
-        if(file.type==="application/pdf"){
-            pdfFiles.push(file);
         }
 
-    });
 
-    renderPDFs();
+        function fileToDataURL(file) {
 
-}
+            return new Promise((resolve, reject) => {
 
+                const reader = new FileReader();
 
-function renderPDFs(){
+                reader.onload = () => resolve(reader.result);
 
-    const list=document.getElementById("pdfList");
+                reader.onerror = reject;
 
-    list.innerHTML="";
+                reader.readAsDataURL(file);
 
-    pdfFiles.forEach((file,index)=>{
-
-        const item=document.createElement("div");
-
-        item.className="file-item";
-
-        item.innerHTML=`
-            <span>📄 ${escapeHTML(file.name)}</span>
-            <button class="remove-file" onclick="removePDF(${index})">Remove</button>
-        `;
-
-        list.appendChild(item);
-
-    });
-
-}
-
-
-function removePDF(index){
-
-    pdfFiles.splice(index,1);
-
-    renderPDFs();
-
-}
-
-
-/* MERGE PDF */
-
-async function mergePDFs(){
-
-    if(pdfFiles.length<2){
-        toast("Select at least two PDF files.");
-        return;
-    }
-
-    const output=await PDFLib.PDFDocument.create();
-
-    try{
-
-        for(const file of pdfFiles){
-
-            const bytes=await file.arrayBuffer();
-
-            const source=await PDFLib.PDFDocument.load(bytes);
-
-            const pages=await output.copyPages(
-                source,
-                source.getPageIndices()
-            );
-
-            pages.forEach(page=>{
-                output.addPage(page);
             });
 
         }
 
-        const result=await output.save();
 
-        let filename=document.getElementById("mergeFile").value.trim() || "merged-pdf";
+        async function mergePDFs() {
 
-        if(!filename.toLowerCase().endsWith(".pdf")){
-            filename+=".pdf";
+            const input = document.getElementById("pdfInput");
+
+            if (!input.files.length) {
+
+                alert("Please select at least two PDF files.");
+
+                return;
+
+            }
+
+            if (input.files.length < 2) {
+
+                alert("Please select at least two PDF files.");
+
+                return;
+
+            }
+
+            const mergedPdf = await PDFLib.PDFDocument.create();
+
+            for (const file of input.files) {
+
+                const bytes = await file.arrayBuffer();
+
+                const pdf = await PDFLib.PDFDocument.load(bytes);
+
+                const pages = await mergedPdf.copyPages(
+                    pdf,
+                    pdf.getPageIndices()
+                );
+
+                pages.forEach(page => {
+
+                    mergedPdf.addPage(page);
+
+                });
+
+            }
+
+            const mergedBytes = await mergedPdf.save();
+
+            const blob = new Blob(
+                [mergedBytes],
+                { type: "application/pdf" }
+            );
+
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+
+            link.href = url;
+
+            link.download = "quickpdf-merged.pdf";
+
+            link.click();
+
+            URL.revokeObjectURL(url);
+
         }
 
-        const blob=new Blob([result],{
-            type:"application/pdf"
-        });
-
-        const url=URL.createObjectURL(blob);
-
-        const a=document.createElement("a");
-
-        a.href=url;
-        a.download=filename;
-
-        document.body.appendChild(a);
-
-        a.click();
-
-        a.remove();
-
-        URL.revokeObjectURL(url);
-
-        toast("PDFs merged successfully!");
-
-    }catch(error){
-
-        console.error(error);
-
-        toast("Unable to merge these PDF files.");
-
-    }
-
-}
-
-
-/* FAQ */
-
-document.querySelectorAll(".faq-question").forEach(button=>{
-
-    button.addEventListener("click",()=>{
-
-        const item=button.parentElement;
-
-        item.classList.toggle("open");
-
-        button.querySelector("span").textContent=
-            item.classList.contains("open") ? "−" : "+";
-
-    });
-
-});
-
-
-/* SECURITY */
-
-function escapeHTML(text){
-
-    return text.replace(/[&<>"']/g,function(char){
-
-        const entities={
-            "&":"&amp;",
-            "<":"&lt;",
-            ">":"&gt;",
-            '"':"&quot;",
-            "'":"&#039;"
-        };
-
-        return entities[char];
-
-    });
-
-}
-
-</script>
+    </script>
 
 </body>
+
 </html>
