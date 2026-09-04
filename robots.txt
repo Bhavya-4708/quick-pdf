@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bhavya-4708.github.io/quick-pdf/sitemap.xml
